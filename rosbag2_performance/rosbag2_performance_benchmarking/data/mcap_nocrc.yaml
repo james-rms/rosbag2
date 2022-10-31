@@ -1,2 +1,1 @@
-noCRC: true
-compression: None
+noChunkCRC: true
