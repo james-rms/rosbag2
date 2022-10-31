@@ -1,3 +1,0 @@
-compression: "Zstd"
-compressionLevel: "Fastest"
-noChunkCRC: true
