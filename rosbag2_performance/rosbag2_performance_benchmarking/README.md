@@ -1,6 +1,6 @@
-# Rosbag2 writer benchmarking
+# Rosbag2 Performance Benchmarking
 
-The primary package to test performance of the rosbag2.
+A package to provide various benchmark tests to measure performance of rosbag2. Its purpose is to help track performance over time, as well as compare the performance of different settings or plugins.
 
 ## How it works
 
@@ -39,13 +39,6 @@ storage uri, which is used to read the bag metadata file.
 
 Note that while you can opt to select compression for benchmarking, the generated data is random so it is likely not representative for this specific case. To publish non-random data, you need to modify the ByteProducer.
 
-## Building
-
-To build the package in the rosbag2 build process, make sure to turn `BUILD_ROSBAG2_BENCHMARKS` flag on (e.g. `colcon build --cmake-args -DBUILD_ROSBAG2_BENCHMARKS=1`)
-
-If you already built rosbag2, you can use `packages-select` option to build benchmarks.
-Example: `colcon build --packages-select rosbag2_performance_benchmarking --cmake-args -DBUILD_ROSBAG2_BENCHMARKS=1`.
-
 ## General knowledge: I/O benchmarking
 
 #### Background: benchmarking disk writes on your system
@@ -64,13 +57,20 @@ Note: this depends on parameters used and whatever else is running on your syste
 
 **Using fio**
 
-For more sophisticated & accurate benchmarks, see the `fio` command. An example for big data blocks is: `fio --name TEST --eta-newline=5s --filename=fio-tempfile.dat --rw=write --size=500m --io_size=10g --blocksize=1024k --ioengine=libaio --fsync=10000 --iodepth=32 --direct=1 --numjobs=1 --runtime=60 --group_reporting`.
+For more sophisticated & accurate benchmarks, see the `fio` command. An example for big data blocks is:
+
+```
+fio --name TEST --eta-newline=5s --filename=fio-tempfile.dat --rw=write \
+  --size=500m --io_size=10g --blocksize=1024k \
+  --ioengine=libaio --fsync=10000 --iodepth=32 --direct=1 \
+  --numjobs=1 --runtime=60 --group_reporting
+```
 
 #### Profiling bags I/O with tools
 
 Tools that can help in I/O profiling: `sudo apt-get install iotop ioping sysstat`
 * `iotop` works similar as `top` command, but shows disk reads, writes, swaps and I/O %. Can be used at higher frequency in batch mode with specified process to deliver data that can be plotted.
-  *  Example use: `sudo iotop -h -d 0.1 -t -b -o -p <PID>` after running the bag.  
+  *  Example use: `sudo iotop -h -d 0.1 -t -b -o -p <PID>` after running the bag.
 * `ioping` can be used to check latency of requests to device
 * `strace` can help determine syscalls associated with the bottleneck.
   *  Example use: `strace -c ros2 bag record /image --max-cache-size 10 -o ./tmp`. You will see a report after finishing recording with Ctrl-C.
