@@ -62,15 +62,16 @@ class PostprocessStorageConfig(Postprocess):
         # Split data for storage configs
         splitted_data = {}
         for data in grouped_data:
-            storage_cfg_name = data[0]['storage_config']
+            storage_cfg_name = data[0]["storage_config"]
+            print(storage_cfg_name)
             storage_cfg_name = storage_cfg_name if storage_cfg_name != '' else 'default'
             if storage_cfg_name not in splitted_data.keys():
                 splitted_data.update({storage_cfg_name: []})
             splitted_data[storage_cfg_name].append(data)
 
-        cache_data_per_storage_conf = {}
+       
 
-        print(yaml.dump(producers_config_publishers))
+        cache_data_per_storage_conf = {}
 
         def __process_test(compression_selected,
                            compression_queue_size_selected,
@@ -80,8 +81,6 @@ class PostprocessStorageConfig(Postprocess):
                 cache_samples = {}
                 for sample in data:
                     # Single sample contains multiple rows
-                    if len(sample) != len(producers_config_publishers['publisher_groups']):
-                        raise RuntimeError('Invalid number of records in results detected.')
 
                     # These parameters are same for all rows in sample
                     # (multiple publishers in publisher group)
@@ -189,7 +188,7 @@ class Report:
         results_path = pathlib.Path(self.__benchmark_dir).joinpath('results.csv')
 
         with open(results_path, mode='r') as fp:
-            reader = csv.DictReader(fp, delimiter=' ')
+            reader = csv.DictReader(fp)
             results = []
 
             for result in reader:
@@ -201,7 +200,7 @@ class Report:
                                        ['publishers']
                                        ['publisher_groups'])
 
-            publishers_groups_num = len(publishers_groups)
+            publishers_groups_num = 1
 
             # Group rows in results file, so that rows within same benchmark run are
             # in one list

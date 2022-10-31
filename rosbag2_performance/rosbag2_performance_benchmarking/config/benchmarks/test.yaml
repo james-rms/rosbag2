@@ -3,7 +3,7 @@ rosbag2_performance_benchmarking:
     ros__parameters:
       benchmark:
         summary_result_file: "results.csv"
-        db_root_folder: "rosbag2_performance_test_results"
+        db_root_folder: "shm"
         # How many times to run each configurations (to average results)
         repeat_each: 2
         # Whether to run storage-only or end-to-end (including transport) benchmark
@@ -23,25 +23,15 @@ rosbag2_performance_benchmarking:
           compression_queue_size: [1]
           compression_threads:    [0]
           storage:
-            - id: sqlite3
-              config_file: sqlite_optimized.yaml
-            - id: sqlite3
-              config_file: sqlite_resilient.yaml
-            - id: mcap
-              config_file: mcap_basic.yaml
-            - id: mcap
-              config_file: mcap_chunk1M.yaml
-            - id: mcap
-              config_file: mcap_chunk10M.yaml
-            - id: mcap
-              config_file: mcap_chunk100M.yaml
-            - id: mcap
-              config_file: mcap_nochunking.yaml
-            - id: mcap
-              config_file: mcap_nocrc.yaml
-            - id: mcap
-              config_file: mcap_nomessageindex.yaml
-            - id: mcap
-              config_file: mcap_nosummary.yaml
-            - id: mcap
-              config_file: mcap_noall.yaml
+            - config_file: mcap_default.yaml
+              id: mcap
+            - config_file: mcap_nochunking.yaml
+              id: mcap
+            - config_file: mcap_nocrc.yaml
+              id: mcap
+            - config_file: mcap_zstd.yaml
+              id: mcap
+            - config_file: sqlite_default.yaml
+              id: sqlite3
+            - config_file: sqlite_resilient.yaml
+              id: sqlite3
