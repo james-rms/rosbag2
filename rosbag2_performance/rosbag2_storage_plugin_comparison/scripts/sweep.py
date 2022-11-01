@@ -20,6 +20,7 @@ the function `build_configs()` iterates through the variants of each parameter a
 a config for each combination."""
 CONFIG_DIMENSIONS = {
     # The size and distribution of messages to write.
+    "run": { str(n): {}  for n in range(5) },
     "messages": {
         "large": { "topics": [{"name": "/large", "message_size": 1_000_000}]},
         "medium": { "topics": [{"name": "/medium", "message_size": 10_000}]},
@@ -38,30 +39,22 @@ CONFIG_DIMENSIONS = {
     # Configuration parameters for the writer plugin to use.
     "plugin_config": {
         "mcap_default": {"storage_id": "mcap"},
-        "mcap_nocrc": {
-            "storage_id": "mcap",
-            "storage_options": {
-                "noCRC": True,
-            }
-        },
-        "mcap_zstdfast": {
-            "storage_id": "mcap",
-            "storage_options": {
-                "chunkSize": 10_000_000,
-                "compression": "Zstd",
-                "compressionLevel": "Fastest",
-            }
-        },
         "mcap_uncompressed": {
             "storage_id": "mcap",
             "storage_options": {
                 "compression": "None",
             }
         },
+        "mcap_nocrc": {
+            "storage_id": "mcap",
+            "storage_options": {
+                "noChunkCRC": True,
+                "compression": "None",
+            }
+        },
         "mcap_nochunking": {
             "storage_id": "mcap",
             "storage_options": {
-                "noCRC": True,
                 "noChunking": True,
             }
         },
