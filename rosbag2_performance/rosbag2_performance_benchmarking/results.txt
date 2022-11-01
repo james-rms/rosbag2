@@ -1,44 +1,43 @@
 Results: 
-	Repetitions: 2
+	Repetitions: 5
 	Max bagfile size: 0
 	Compression: <default>
 	Compression threads: 0
 	Compression queue size: 1
 	Recorded messages for different caches and storage config:
 		storage config: mcap_default.yaml:
-			cache 0 - min: 2.96%, average: 3.01%, max: 3.06%
-			cache 100,000 - min: 21.50%, average: 22.35%, max: 23.20%
-			cache 1,000,000 - min: 24.19%, average: 24.76%, max: 25.32%
-			cache 10,000,000 - min: 21.15%, average: 22.13%, max: 23.11%
-			cache 100,000,000 - min: 44.14%, average: 44.35%, max: 44.56%
+			cache 0 - min: 2.91%, average: 3.09%, max: 3.21%
+			cache 100,000 - min: 22.20%, average: 24.52%, max: 26.95%
+			cache 1,000,000 - min: 17.71%, average: 21.84%, max: 25.12%
+			cache 10,000,000 - min: 20.45%, average: 20.92%, max: 21.51%
+			cache 100,000,000 - min: 40.46%, average: 44.16%, max: 47.30%
 		storage config: mcap_nochunking.yaml:
-			cache 0 - min: 77.94%, average: 79.60%, max: 81.26%
-			cache 100,000 - min: 92.56%, average: 92.86%, max: 93.16%
-			cache 1,000,000 - min: 89.81%, average: 90.44%, max: 91.07%
-			cache 10,000,000 - min: 91.90%, average: 92.04%, max: 92.19%
-			cache 100,000,000 - min: 89.32%, average: 92.28%, max: 95.23%
+			cache 0 - min: 74.70%, average: 77.54%, max: 80.47%
+			cache 100,000 - min: 87.60%, average: 90.51%, max: 93.40%
+			cache 1,000,000 - min: 86.32%, average: 88.77%, max: 90.98%
+			cache 10,000,000 - min: 86.30%, average: 89.38%, max: 91.61%
+			cache 100,000,000 - min: 86.38%, average: 88.14%, max: 90.57%
 		storage config: mcap_nocrc.yaml:
-			cache 0 - min: 40.46%, average: 40.89%, max: 41.32%
-			cache 100,000 - min: 83.81%, average: 85.23%, max: 86.65%
-			cache 1,000,000 - min: 88.85%, average: 88.90%, max: 88.95%
-			cache 10,000,000 - min: 91.32%, average: 92.37%, max: 93.41%
-			cache 100,000,000 - min: 99.08%, average: 99.31%, max: 99.54%
-		storage config: mcap_zstd.yaml:
-			cache 0 - min: 42.56%, average: 42.94%, max: 43.33%
-			cache 100,000 - min: 87.25%, average: 90.37%, max: 93.48%
-			cache 1,000,000 - min: 92.58%, average: 94.30%, max: 96.03%
-			cache 10,000,000 - min: 91.34%, average: 92.91%, max: 94.48%
-			cache 100,000,000 - min: 98.62%, average: 99.04%, max: 99.47%
+			cache 0 - min: 44.16%, average: 46.70%, max: 48.30%
+			cache 100,000 - min: 91.44%, average: 93.13%, max: 96.04%
+			cache 1,000,000 - min: 91.57%, average: 95.05%, max: 97.08%
+			cache 10,000,000 - min: 91.24%, average: 93.72%, max: 97.37%
+			cache 100,000,000 - min: 95.43%, average: 97.22%, max: 98.83%
+		storage config: mcap_uncompressed.yaml:
+			cache 0 - min: 2.96%, average: 3.15%, max: 3.36%
+			cache 100,000 - min: 22.12%, average: 24.46%, max: 27.76%
+			cache 1,000,000 - min: 20.78%, average: 24.69%, max: 27.40%
+			cache 10,000,000 - min: 23.12%, average: 24.55%, max: 25.51%
+			cache 100,000,000 - min: 42.10%, average: 43.69%, max: 45.16%
 		storage config: sqlite_default.yaml:
-			cache 0 - min: 16.57%, average: 16.81%, max: 17.05%
-			cache 100,000 - min: 96.46%, average: 97.49%, max: 98.51%
-			cache 1,000,000 - min: 96.18%, average: 96.87%, max: 97.57%
-			cache 10,000,000 - min: 98.45%, average: 98.78%, max: 99.12%
-			cache 100,000,000 - min: 97.05%, average: 98.04%, max: 99.03%
+			cache 0 - min: 16.51%, average: 16.75%, max: 17.06%
+			cache 100,000 - min: 93.62%, average: 94.74%, max: 95.49%
+			cache 1,000,000 - min: 93.35%, average: 95.38%, max: 97.65%
+			cache 10,000,000 - min: 94.11%, average: 96.02%, max: 97.87%
+			cache 100,000,000 - min: 90.99%, average: 94.76%, max: 96.65%
 		storage config: sqlite_resilient.yaml:
-			cache 0 - min: 19.96%, average: 20.05%, max: 20.15%
-			cache 100,000 - min: 86.34%, average: 86.52%, max: 86.71%
-			cache 1,000,000 - min: 94.70%, average: 95.22%, max: 95.74%
-			cache 10,000,000 - min: 95.97%, average: 96.59%, max: 97.22%
-			cache 100,000,000 - min: 96.57%, average: 97.49%, max: 98.42%
-
+			cache 0 - min: 19.86%, average: 20.27%, max: 21.14%
+			cache 100,000 - min: 82.50%, average: 84.15%, max: 85.89%
+			cache 1,000,000 - min: 93.42%, average: 93.61%, max: 93.99%
+			cache 10,000,000 - min: 90.81%, average: 92.67%, max: 94.46%
+			cache 100,000,000 - min: 92.41%, average: 93.57%, max: 94.65%

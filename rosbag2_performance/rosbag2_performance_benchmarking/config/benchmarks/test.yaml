@@ -5,7 +5,7 @@ rosbag2_performance_benchmarking:
         summary_result_file: "results.csv"
         db_root_folder: "shm"
         # How many times to run each configurations (to average results)
-        repeat_each: 2
+        repeat_each: 5
         # Whether to run storage-only or end-to-end (including transport) benchmark
         no_transport: true
         # Whether to leave bag files after experiment (and between runs). Some configurations can take lots of space!
@@ -29,7 +29,7 @@ rosbag2_performance_benchmarking:
               id: mcap
             - config_file: mcap_nocrc.yaml
               id: mcap
-            - config_file: mcap_zstd.yaml
+            - config_file: mcap_uncompressed.yaml
               id: mcap
             - config_file: sqlite_default.yaml
               id: sqlite3
