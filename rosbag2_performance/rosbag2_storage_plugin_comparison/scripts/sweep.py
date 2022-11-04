@@ -20,11 +20,11 @@ the function `build_configs()` iterates through the variants of each parameter a
 a config for each combination."""
 CONFIG_DIMENSIONS = {
     # The size and distribution of messages to write.
-    "run": { str(n): {}  for n in range(5) },
+    "run": { str(n): dict() for n in range(5) },
     "messages": {
-        "large": { "topics": [{"name": "/large", "message_size": 1_000_000}]},
-        "medium": { "topics": [{"name": "/medium", "message_size": 10_000}]},
-        "small": { "topics": [{"name": "/small", "message_size": 100}]},
+        "1MiB": { "topics": [{"name": "/large", "message_size": 2 ** 20}]},
+        "10KiB": { "topics": [{"name": "/medium", "message_size": 10 * (2 ** 10)}]},
+        "100B": { "topics": [{"name": "/small", "message_size": 100}]},
         "mixed": { "topics": [
             {"name": "/small", "message_size": 100, "write_proportion": 0.1},
             {"name": "/medium", "message_size": 10_000, "write_proportion": 0.2},
@@ -33,23 +33,22 @@ CONFIG_DIMENSIONS = {
     },
     # The size of batches to write in each write() call.
     "batch_size": {
-        "small": { "min_batch_size_bytes": 1000 },
-        "default": { "min_batch_size_bytes": 10000000 },
+        "1KiB": { "min_batch_size_bytes": (2 ** 10) },
+        "10MiB": { "min_batch_size_bytes": 10 * (2 ** 20) },
     },
     # Configuration parameters for the writer plugin to use.
     "plugin_config": {
         "mcap_default": {"storage_id": "mcap"},
-        "mcap_uncompressed": {
+        "mcap_compressed_nocrc": {
             "storage_id": "mcap",
             "storage_options": {
-                "compression": "None",
+                "compression": "Zstd",
             }
         },
-        "mcap_nocrc": {
+        "mcap_uncompressed_crc": {
             "storage_id": "mcap",
             "storage_options": {
-                "noChunkCRC": True,
-                "compression": "None",
+                "noChunkCRC": False,
             }
         },
         "mcap_nochunking": {
@@ -108,12 +107,12 @@ def build_configs():
         configs = new_configs
     return configs
 
-def run_once(config):
+def run_once(config, corpus_path):
     """ Runs `single_benchmark` with the given config and returns the resulting CSV content. """
     outdir = mkdtemp()
     try:
         res = subprocess.run(
-            [executable_path(), yaml.dump(config), outdir],
+            [executable_path(), yaml.dump(config), outdir, corpus_path],
             check=True,
             stdout=subprocess.PIPE
         )
@@ -125,27 +124,17 @@ def make_digest(name, csv_content):
     """ Aggregates the results of one benchmark run into a row for the final digest CSV. """
     reader = csv.DictReader(StringIO(csv_content))
     write_times = []
-    arena_sizes = []
-    in_use_sizes = []
     byte_throughputs = []
-    mmap_sizes = []
     close_time = None
     for row in reader:
         if row["close_ns"]:
             close_time = float(row["close_ns"]) / 1e9
         else:
             write_times.append(float(row["write_ns"]) / 1e9)
-            arena_sizes.append(int(row["arena_bytes"]))
             byte_throughputs.append(float(row["num_bytes"]) / (float(row["write_ns"]) / 1e9))
-            in_use_sizes.append(int(row["in_use_bytes"]))
-            mmap_sizes.append(int(row["mmap_bytes"]))
     res = dict(**name)
     res.update({
-        "name": ";".join([f"{k}={v}" for k, v in name.items()]),
         "avg_byte_throughput": sum(byte_throughputs) / len(byte_throughputs),
-        "max_arena_size": max(arena_sizes),
-        "max_in_use_size": max(in_use_sizes),
-        "max_mmap_size": max(mmap_sizes),
         "close_time": close_time,
     })
     return res
@@ -165,9 +154,10 @@ def write_csv_from_dicts(outfile, rows):
 def main():
     configs = build_configs()
     digest_rows = []
+    corpus_path = "/home/parallels/code/nuscenes2mcap/output/NuScenes-v1.0-mini-scene-0757.mcap"
     for name, config in configs:
         print(f"Running benchmark: {name}...", file=sys.stderr)
-        result = run_once(config)
+        result = run_once(config, corpus_path)
         digest_rows.append(make_digest(name, result))
     if len(sys.argv) > 1:
         with open(sys.argv[1], "w") as f:
