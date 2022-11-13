@@ -1,2 +1,5 @@
 # Empty configuration, uses the default pragmas for `rosbag2_storage_sqlite3`
-{}
+write:
+  pragmas: []
+
+

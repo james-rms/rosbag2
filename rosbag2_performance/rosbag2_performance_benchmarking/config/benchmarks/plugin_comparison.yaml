@@ -19,15 +19,15 @@ rosbag2_performance_benchmarking:
           compression_queue_size: [1]
           compression_threads:    [0]
           storage:
-            - config_file: mcap_default.yaml
+            - config_file: config/storage/mcap_default.yaml
               id: mcap
-            - config_file: mcap_nochunking.yaml
+            - config_file: config/storage/mcap_nochunking.yaml
               id: mcap
-            - config_file: mcap_uncompressed_crc.yaml
+            - config_file: config/storage/mcap_uncompressed_crc.yaml
               id: mcap
-            - config_file: mcap_compressed_nocrc.yaml
+            - config_file: config/storage/mcap_compressed_nocrc.yaml
               id: mcap
-            - config_file: sqlite_default.yaml
+            - config_file: config/storage/sqlite_default.yaml
               id: sqlite3
-            - config_file: sqlite_resilient.yaml
+            - config_file: config/storage/sqlite_resilient.yaml
               id: sqlite3

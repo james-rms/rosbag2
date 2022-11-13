@@ -1,0 +1,32 @@
+rosbag2_performance_benchmarking_node:
+  ros__parameters:
+    publishers:
+      publisher_groups:
+        - "100B_messages"
+        - "10KiB_messages"
+        - "1MiB_messages"
+      wait_for_subscriptions: True
+      # This config should produce 600MiB/s total, at a ratio of 7:2:1 large:medium:small messages
+      # by size.
+      100B_messages:
+        # 10MiB/s = 104857.6 messages/s ~= 409 * 256
+        publishers_count:   1
+        topic_root:         "one_hundred_bytes"
+        msg_size_bytes:     100
+        msg_count_each:     1048570
+        rate_hz:            314571  
+      10KiB_messages:
+        # 40MiB/s = 4096 messages/s
+        publishers_count:   100
+        publishers_count:   1
+        topic_root:         "ten_kibibytes"
+        msg_size_bytes:     10240
+        msg_count_each:     40960
+        rate_hz:            12288
+      1MiB_messages:
+        # 140MiB/s = 140 messages/s
+        publishers_count:   1
+        topic_root:         "one_mebibyte"
+        msg_size_bytes:     1048576
+        msg_count_each:     1400
+        rate_hz:            420
