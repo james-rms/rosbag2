@@ -38,7 +38,7 @@ def main():
             color=["skyblue" if "mcap" in name else "aquamarine" for name in series.index.get_level_values(0)],
             capsize=10,
         )
-        plt.ylabel("Drop ratio")
+        plt.ylabel("Messages Recorded (higher is better)")
         title = f"cache size: {cache_size_label}"
         if args.title is not None:
             title = f"{args.title}\n{title}"
@@ -51,7 +51,7 @@ def main():
         plt.clf()
         high = max(series["mean"])
         low = min(series["mean"])
-        plt.ylim([math.ceil(low-0.5*(high-low)), math.ceil(high+0.5*(high-low))])
+        # plt.ylim([low-0.5*(high-low), high+0.5*(high-low)])
 
 
 if __name__ == "__main__":

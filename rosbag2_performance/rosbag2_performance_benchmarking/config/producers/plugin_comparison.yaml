@@ -7,23 +7,23 @@ rosbag2_performance_benchmarking_node:
         - "1MiB_messages"
       wait_for_subscriptions: True
       100B_messages:
-        # 62MB/s?
+        # 100 * 1000 = 100KB/s
         topic_root:         "one_hundred_bytes"
         msg_size_bytes:     100
-        publishers_count:   20
-        rate_hz:            31457
-        msg_count_each:     62914
+        publishers_count:   15
+        rate_hz:            1000
+        msg_count_each:     1000
       10KiB_messages:
-        # 125MB/s
+        # 10240 * 40 = 400KiB/s
         topic_root:         "ten_kibibytes"
         msg_size_bytes:     10240
         publishers_count:   1
-        rate_hz:            12288
-        msg_count_each:     24576
+        rate_hz:            292
+        msg_count_each:     292
       1MiB_messages:
-        # 440MB/s
+        # 1MiB * 20 = 20MiB/s
         topic_root:         "one_mebibyte"
         msg_size_bytes:     1048576
         publishers_count:   1
-        rate_hz:            420
-        msg_count_each:     840
+        rate_hz:            10
+        msg_count_each:     10

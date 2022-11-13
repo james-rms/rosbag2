@@ -12,7 +12,6 @@ OUTPUT_METRIC = "avg_byte_throughput"
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("csv", help="input CSV to draw plots of")
-    parser.add_argument("--color", default="skyblue", help="colour of bars to plot")
     parser.add_argument("--outdir", default="./plots", help="output directory to write plots to")
     parser.add_argument("--title", help="A title to add to each plot")
     args = parser.parse_args()
@@ -40,14 +39,15 @@ def main():
                 yerr=series["ci"],
                 align='edge',
                 ecolor='black',
-                color=args.color,
+                color=["skyblue" if name.startswith("mcap") else "aquamarine" for name in series.index.get_level_values(0)],
                 capsize=10,
             )
             plt.ylabel("Throughput (bytes/s)")
-            plt.title(f"Throughput: batch size: {batch_label}, message sizes: {message_label}")
-            plt.tick_params(labelrotation=45)
+            title = f"batch size: {batch_label}, message sizes: {message_label}"
             if args.title is not None:
-                plt.title(args.title)
+                title = f"{args.title}\n{title}"
+            plt.title(title)
+            plt.tick_params(labelrotation=45)
             plt.tight_layout()
             outpath = Path(args.outdir) / f"{message_label}_{batch_label}.png"
             print(f"saving figure to {outpath}", file=sys.stderr)

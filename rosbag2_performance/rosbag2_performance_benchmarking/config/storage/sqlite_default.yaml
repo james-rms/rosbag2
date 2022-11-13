@@ -1,5 +1,3 @@
-# Empty configuration, uses the default pragmas for `rosbag2_storage_sqlite3`
+# note: this is the default now, using this file does not change how the storage behaves
 write:
-  pragmas: []
-
-
+  pragmas: ["journal_mode = MEMORY", "synchronous = OFF"]

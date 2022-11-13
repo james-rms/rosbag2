@@ -6,7 +6,6 @@ rosbag2_performance_benchmarking:
         # Bags are written to a ramdisk. `/dev/shm` is available on many unix systems, but feel
         # free to create your own with `sudo mount -t tmpfs foobar <your directory name>`
         db_root_folder: "/dev/shm"
-        # Gather statistics across 5 repeats
         repeat_each: 5
         no_transport: true
         preserve_bags: false
