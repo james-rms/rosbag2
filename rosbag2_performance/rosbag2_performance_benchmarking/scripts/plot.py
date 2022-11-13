@@ -51,7 +51,7 @@ def main():
         plt.clf()
         high = max(series["mean"])
         low = min(series["mean"])
-        # plt.ylim([low-0.5*(high-low), high+0.5*(high-low)])
+        plt.ylim([low-0.5*(high-low), high+0.5*(high-low)])
 
 
 if __name__ == "__main__":
