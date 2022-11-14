@@ -4,6 +4,7 @@ rosbag2_storage::BaseWriteInterface implementations. Writes a CSV summary of eac
 stdout, or to a file if a path is provided.
 """
 
+import argparse
 from pathlib import Path
 import subprocess
 import shutil
@@ -109,7 +110,7 @@ def build_configs():
 
 def run_once(config, corpus_path):
     """ Runs `single_benchmark` with the given config and returns the resulting CSV content. """
-    outdir = mkdtemp()
+    outdir = mkdtemp(prefix="/dev/shm/")
     try:
         res = subprocess.run(
             [executable_path(), yaml.dump(config), outdir, corpus_path],
@@ -152,15 +153,18 @@ def write_csv_from_dicts(outfile, rows):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--message-data", type=Path, required=True, help="a file with bytes to use as message content")
+    parser.add_argument("output", type=Path, nargs="?", help="the output file to write to")
+    args = parser.parse_args()
     configs = build_configs()
     digest_rows = []
-    corpus_path = "/home/parallels/code/nuscenes2mcap/output/NuScenes-v1.0-mini-scene-0757.mcap"
     for name, config in configs:
         print(f"Running benchmark: {name}...", file=sys.stderr)
-        result = run_once(config, corpus_path)
+        result = run_once(config, args.message_data)
         digest_rows.append(make_digest(name, result))
-    if len(sys.argv) > 1:
-        with open(sys.argv[1], "w") as f:
+    if args.output:
+        with open(args.output, "w") as f:
             write_csv_from_dicts(f, digest_rows)
     else:
         s = StringIO()
