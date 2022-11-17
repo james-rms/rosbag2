@@ -12,7 +12,7 @@ rosbag2_performance_benchmarking_node:
         msg_size_bytes:     100
         publishers_count:   15
         rate_hz:            2000
-        msg_count_each:     10000
+        msg_count_each:     20000
       10KiB_messages:
         # 10240 * 40 = 400KiB/s
         topic_root:         "ten_kibibytes"

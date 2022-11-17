@@ -22,9 +22,9 @@ rosbag2_performance_benchmarking:
               id: mcap
             - config_file: config/storage/mcap_nochunking.yaml
               id: mcap
-            - config_file: config/storage/mcap_uncompressed_crc.yaml
-              id: mcap
             - config_file: config/storage/mcap_compressed_nocrc.yaml
+              id: mcap
+            - config_file: config/storage/mcap_uncompressed_crc.yaml
               id: mcap
             - config_file: config/storage/sqlite_default.yaml
               id: sqlite3
