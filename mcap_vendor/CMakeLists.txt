@@ -27,14 +27,14 @@ endif()
 macro(build_mcap_vendor)
   include(FetchContent)
   fetchcontent_declare(mcap
-    GIT_REPOSITORY https://github.com/foxglove/mcap.git
-    GIT_TAG dc6561d9ba867901709e36526dcf7f7359861e9c # releases/cpp/v0.7.0
+    URL https://github.com/foxglove/mcap/archive/refs/tags/releases/cpp/v0.8.0.tar.gz # v0.8.0
+    URL_HASH MD5=a328846af6f65839e5c47e0f6a3af781
   )
   fetchcontent_makeavailable(mcap)
 
   fetchcontent_declare(lz4
-    GIT_REPOSITORY https://github.com/lz4/lz4.git
-    GIT_TAG d44371841a2f1728a3f36839fd4b7e872d0927d3 # v1.9.3
+    URL https://github.com/lz4/lz4/archive/refs/tags/v1.9.4.tar.gz # v1.9.4
+    URL_HASH MD5=e9286adb64040071c5e23498bf753261
   )
   fetchcontent_makeavailable(lz4)
 
